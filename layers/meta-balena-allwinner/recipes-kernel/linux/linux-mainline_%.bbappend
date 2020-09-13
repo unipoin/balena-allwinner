@@ -16,6 +16,7 @@ SRC_URI_remove_gridless-mini = "file://0001-dts-orange-pi-zero-Add-wifi-support.
 
 SRC_URI_append_gridless-mini = " \
     file://gridless-mini/0001_add_gridless_mini_b3e_dts_files.patch \
+    file://gridless-mini/rs485-8250_dw_new.patch \
 "
 
 SRC_URI_append = " \
