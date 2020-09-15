@@ -220,10 +220,6 @@ FILES_${PN}-fixup-scr = " \
     /boot/sun8i-h3-fixup.scr \
 "
 
-KERNEL_DEVICETREE_gridless-mini = " \
-    sun8i-h3-gridless-mini-B3E.dtb \
-"
-
 KERNEL_DEVICETREE_orange-pi-zero_append = " \
     sun8i-h2-plus-orangepi-zero.dtb \
     overlay/sun8i-h3-analog-codec.dtbo \
