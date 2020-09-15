@@ -18,5 +18,4 @@ SRC_URI_append_nanopi_neo_air = "file://0001-nanopi_neo_air_defconfig-Enable-eMM
 
 SRC_URI_append_gridless-mini = "file://0003-add_gridless_mini_defconfig.patch \
 				file://0004-add_gridless_mini_dts.patch \
-		"
-#				file://0005-sun8i-add-usb-phy-select.patch \
+				"
