@@ -13,7 +13,8 @@ SRC_URI_append = " \
 		file://0002-Change_CONFIG_SYS_BOOTM_LEN_to_64M.patch \
 		"
 
-SRC_URI_remove_gridless-mini = "file://0001-nanopi_neo_air_defconfig-Enable-eMMC-support.patch"
+SRC_URI_remove = "file://0001-nanopi_neo_air_defconfig-Enable-eMMC-support.patch"
+SRC_URI_append_nanopi_neo_air = "file://0001-nanopi_neo_air_defconfig-Enable-eMMC-support.patch"
 
 SRC_URI_append_gridless-mini = "file://0003-add_gridless_mini_defconfig.patch \
 				file://0004-add_gridless_mini_dts.patch \

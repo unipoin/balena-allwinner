@@ -12,7 +12,8 @@ SRC_URI_append_nanopi-neo-air = " \
     file://nanopi-neo-air/board-nanopiair-h3-camera-wifi-bluetooth-otg.patch \
 "
 
-SRC_URI_remove_gridless-mini = "file://0001-dts-orange-pi-zero-Add-wifi-support.patch"
+SRC_URI_remove = "file://0001-dts-orange-pi-zero-Add-wifi-support.patch"
+SRC_URI_add_orange-pi-zero = "file://0001-dts-orange-pi-zero-Add-wifi-support.patch"
 
 SRC_URI_append_gridless-mini = " \
     file://gridless-mini/0001_add_gridless_mini_b3e_dts_files.patch \
