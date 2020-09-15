@@ -151,6 +151,26 @@ IMAGE_CMD_resinos-img_append_nanopi-neo-air () {
 }
 
 #
+# nanopi-neo
+#
+
+IMAGE_FSTYPES_append_nanopi-neo = " resinos-img"
+
+# Customize resinos-img
+RESIN_IMAGE_BOOTLOADER_nanopi-neo = "u-boot"
+RESIN_BOOT_PARTITION_FILES_nanopi-neo = " \
+    ${KERNEL_IMAGETYPE}${KERNEL_INITRAMFS}-${MACHINE}.bin:/${KERNEL_IMAGETYPE} \
+    sun8i-h3-nanopi-neo.dtb:/dtb/sun8i-h3-nanopi-neo.dtb \
+    u-boot-sunxi-with-spl.bin: \
+    boot.scr:/boot.scr \
+    "
+
+IMAGE_CMD_resinos-img_append_nanopi-neo () {
+    # nanopi-neo needs uboot written at a specific location
+    dd if=${DEPLOY_DIR_IMAGE}/u-boot-sunxi-with-spl.bin of=${RESIN_RAW_IMG} conv=notrunc seek=8 bs=1024
+}
+
+#
 # gridless-mini
 #
 

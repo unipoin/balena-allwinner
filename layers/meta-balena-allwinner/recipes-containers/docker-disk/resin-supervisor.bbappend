@@ -2,4 +2,5 @@ LED_FILE_orange-pi-lite = "/sys/devices/platform/leds/leds/orangepi\:red\:status
 LED_FILE_orange-pi-zero = "/sys/devices/platform/leds/leds/orangepi\:red\:status/brightness"
 
 LED_FILE_nanopi-neo-air = "/sys/class/leds/nanopi\:blue\:status/brightness"
+LED_FILE_nanopi-neo = "/sys/class/leds/nanopi\:blue\:status/brightness"
 LED_FILE_gridless-mini = "/sys/class/leds/gl_mini_green_status1/brightness"
