@@ -1,0 +1,179 @@
+diff --git a/arch/arm/dts/sun8i-h3-gridless-mini.dts b/arch/arm/dts/sun8i-h3-gridless-mini.dts
+new file mode 100644
+index 0000000000..61be2b31f6
+--- /dev/null
++++ b/arch/arm/dts/sun8i-h3-gridless-mini.dts
+@@ -0,0 +1,173 @@
++/*
++ * Copyright (C) 2020 Felix Huebner <huebner@unipoin.com>
++ *
++ * This file is dual-licensed: you can use it either under the terms
++ * of the GPL or the X11 license, at your option. Note that this dual
++ * licensing only applies to this file, and not this project as a
++ * whole.
++ *
++ *  a) This file is free software; you can redistribute it and/or
++ *     modify it under the terms of the GNU General Public License as
++ *     published by the Free Software Foundation; either version 2 of the
++ *     License, or (at your option) any later version.
++ *
++ *     This file is distributed in the hope that it will be useful,
++ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ *     GNU General Public License for more details.
++ *
++ * Or, alternatively,
++ *
++ *  b) Permission is hereby granted, free of charge, to any person
++ *     obtaining a copy of this software and associated documentation
++ *     files (the "Software"), to deal in the Software without
++ *     restriction, including without limitation the rights to use,
++ *     copy, modify, merge, publish, distribute, sublicense, and/or
++ *     sell copies of the Software, and to permit persons to whom the
++ *     Software is furnished to do so, subject to the following
++ *     conditions:
++ *
++ *     The above copyright notice and this permission notice shall be
++ *     included in all copies or substantial portions of the Software.
++ *
++ *     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
++ *     EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
++ *     OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
++ *     NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
++ *     HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
++ *     WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
++ *     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
++ *     OTHER DEALINGS IN THE SOFTWARE.
++ */
++
++/dts-v1/;
++#include "sun8i-h3.dtsi"
++#include "sunxi-common-regulators.dtsi"
++
++#include <dt-bindings/gpio/gpio.h>
++
++/ {
++	model = "Gridless.mini";
++	compatible = "unipoin,gridless-mini-b3e", "allwinner,sun8i-h3";
++
++	aliases {
++		serial0 = &uart0;
++	};
++
++	chosen {
++		stdout-path = "serial0:115200n8";
++	};
++
++	leds {
++		compatible = "gpio-leds";
++		heartbeat {
++			label = "gl_mini:green:heartbeat";
++			gpios = <&pio 0 17 GPIO_ACTIVE_HIGH>; /* PA17 */
++			linux,default-trigger = "heartbeat";
++		};
++
++		status1 {
++			label = "gl_mini:green:status2";
++			gpios = <&pio 0 6 GPIO_ACTIVE_HIGH>; /* PA6 */
++			default-state = "off";
++		};
++
++		status2 {
++			label = "gl_mini:green:status3";
++			gpios = <&pio 0 21 GPIO_ACTIVE_HIGH>; /* PA21 */
++			default-state = "off";
++		};
++
++		status3 {
++			label = "gl_mini:green:status4";
++			gpios = <&pio 0 20 GPIO_ACTIVE_HIGH>; /* PA20 */
++			default-state = "off";
++		};
++
++		error {
++			label = "gl_mini:red:error";
++			gpios = <&pio 0 19 GPIO_ACTIVE_HIGH>; /* PA19 */
++			default-state = "off";
++		};
++
++	};
++
++	reg_usb_vbus: usb-vbus {
++		compatible = "regulator-fixed";
++		regulator-name = "usb-vbus";
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
++		enable-active-high;
++		gpio = <&pio 0 10 GPIO_ACTIVE_HIGH>; /* PA10 */
++	};
++};
++
++&mmc0 {
++	vmmc-supply = <&reg_vcc3v3>;
++	bus-width = <4>;
++	cd-gpios = <&pio 5 6 GPIO_ACTIVE_LOW>; /* PF6 */
++	status = "okay";
++};
++
++&mmc2 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&mmc2_8bit_pins>;
++	vmmc-supply = <&reg_vcc3v3>;
++	bus-width = <8>;
++	non-removable;
++	status = "okay";
++};
++
++&emac {
++        phy-handle = <&int_mii_phy>;
++        phy-mode = "mii";
++	status = "okay";
++};
++
++&uart0 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&uart0_pins_a>;
++	status = "okay";
++};
++
++&usbphy {
++        usb1_vbus-supply = <&reg_usb_vbus>;
++        usb2_vbus-supply = <&reg_usb_vbus>;
++        usb3_vbus-supply = <&reg_usb_vbus>;
++	status = "okay";
++};
++
++&ehci0 {
++        status = "okay";
++};
++
++&ohci0 {
++        status = "okay";
++};
++
++&ehci1 {
++        status = "okay";
++};
++
++&ohci1 {
++        status = "okay";
++};
++
++&ehci2 {
++	status = "okay";
++};
++
++&ohci2 {
++	status = "okay";
++};
++
++&i2c0 {
++	status = "okay";
++
++	eeprom@50 {
++		compatible = "atmel,24c02";
++		reg = <0x50>;
++		pagesize = <16>;
++		read-only;
++	};
++};

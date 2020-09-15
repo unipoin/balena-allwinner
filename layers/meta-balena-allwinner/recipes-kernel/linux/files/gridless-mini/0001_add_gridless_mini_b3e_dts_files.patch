@@ -1,0 +1,515 @@
+diff --git a/arch/arm/boot/dts/sun8i-h3-core-board.dtsi b/arch/arm/boot/dts/sun8i-h3-core-board.dtsi
+new file mode 100644
+index 0000000..bcb6e03
+--- /dev/null
++++ b/arch/arm/boot/dts/sun8i-h3-core-board.dtsi
+@@ -0,0 +1,79 @@
++/*
++ * Copyright (C) 2020 Felix Huebner <huebner@unipoin.com>
++ *
++ * This file is dual-licensed: you can use it either under the terms
++ * of the GPL or the X11 license, at your option. Note that this dual
++ * licensing only applies to this file, and not this project as a
++ * whole.
++ *
++ *  a) This file is free software; you can redistribute it and/or
++ *     modify it under the terms of the GNU General Public License as
++ *     published by the Free Software Foundation; either version 2 of the
++ *     License, or (at your option) any later version.
++ *
++ *     This file is distributed in the hope that it will be useful,
++ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ *     GNU General Public License for more details.
++ *
++ * Or, alternatively,
++ *
++ *  b) Permission is hereby granted, free of charge, to any person
++ *     obtaining a copy of this software and associated documentation
++ *     files (the "Software"), to deal in the Software without
++ *     restriction, including without limitation the rights to use,
++ *     copy, modify, merge, publish, distribute, sublicense, and/or
++ *     sell copies of the Software, and to permit persons to whom the
++ *     Software is furnished to do so, subject to the following
++ *     conditions:
++ *
++ *     The above copyright notice and this permission notice shall be
++ *     included in all copies or substantial portions of the Software.
++ *
++ *     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
++ *     EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
++ *     OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
++ *     NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
++ *     HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
++ *     WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
++ *     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
++ *     OTHER DEALINGS IN THE SOFTWARE.
++ */
++
++/dts-v1/;
++
++#include "sun8i-h3.dtsi"
++#include "sunxi-common-regulators.dtsi"
++
++#include <dt-bindings/gpio/gpio.h>
++
++/ {
++	compatible = "rervision,h3-core-board", "allwinner,sun8i-h3";
++
++	aliases {
++		ethernet0 = &emac;
++	};
++};
++
++&emac {
++        phy-handle = <&int_mii_phy>;
++        phy-mode = "mii";
++};
++
++&mmc2 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&mmc2_8bit_pins>;
++	vmmc-supply = <&reg_vcc3v3>;
++	bus-width = <8>;
++	non-removable;
++	status = "okay";
++};
++
++&uart0 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&uart0_pa_pins>;
++};
++
++&wdt0 {
++	status = "okay";
++};
++
+diff --git a/arch/arm/boot/dts/sun8i-h3-gridless-mini-B3E.dts b/arch/arm/boot/dts/sun8i-h3-gridless-mini-B3E.dts
+new file mode 100644
+index 0000000..979ea67
+--- /dev/null
++++ b/arch/arm/boot/dts/sun8i-h3-gridless-mini-B3E.dts
+@@ -0,0 +1,56 @@
++/*
++ * Copyright (C) 2020 Felix Huebner <huebner@unipoin.com>
++ *
++ * This file is dual-licensed: you can use it either under the terms
++ * of the GPL or the X11 license, at your option. Note that this dual
++ * licensing only applies to this file, and not this project as a
++ * whole.
++ *
++ *  a) This file is free software; you can redistribute it and/or
++ *     modify it under the terms of the GNU General Public License as
++ *     published by the Free Software Foundation; either version 2 of the
++ *     License, or (at your option) any later version.
++ *
++ *     This file is distributed in the hope that it will be useful,
++ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ *     GNU General Public License for more details.
++ *
++ * Or, alternatively,
++ *
++ *  b) Permission is hereby granted, free of charge, to any person
++ *     obtaining a copy of this software and associated documentation
++ *     files (the "Software"), to deal in the Software without
++ *     restriction, including without limitation the rights to use,
++ *     copy, modify, merge, publish, distribute, sublicense, and/or
++ *     sell copies of the Software, and to permit persons to whom the
++ *     Software is furnished to do so, subject to the following
++ *     conditions:
++ *
++ *     The above copyright notice and this permission notice shall be
++ *     included in all copies or substantial portions of the Software.
++ *
++ *     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
++ *     EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
++ *     OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
++ *     NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
++ *     HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
++ *     WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
++ *     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
++ *     OTHER DEALINGS IN THE SOFTWARE.
++ */
++
++///dts-v1/;
++
++#include "sun8i-h3-gridless-mini-base.dtsi"
++#include "sun8i-h3-gridless-mini-vert.dtsi"
++
++
++/ {
++        model = "Gridless.mini B3E";
++        compatible = "unipoin,gridless-mini-b3e",
++	             "rervision,h3-core-board",
++                     "allwinner,sun8i-h3";
++};
++
++
+diff --git a/arch/arm/boot/dts/sun8i-h3-gridless-mini-base.dtsi b/arch/arm/boot/dts/sun8i-h3-gridless-mini-base.dtsi
+new file mode 100644
+index 0000000..293a04b
+--- /dev/null
++++ b/arch/arm/boot/dts/sun8i-h3-gridless-mini-base.dtsi
+@@ -0,0 +1,207 @@
++/*
++ * Copyright (C) 2020 Felix Huebner <huebner@unipoin.com>
++ *
++ * This file is dual-licensed: you can use it either under the terms
++ * of the GPL or the X11 license, at your option. Note that this dual
++ * licensing only applies to this file, and not this project as a
++ * whole.
++ *
++ *  a) This file is free software; you can redistribute it and/or
++ *     modify it under the terms of the GNU General Public License as
++ *     published by the Free Software Foundation; either version 2 of the
++ *     License, or (at your option) any later version.
++ *
++ *     This file is distributed in the hope that it will be useful,
++ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ *     GNU General Public License for more details.
++ *
++ * Or, alternatively,
++ *
++ *  b) Permission is hereby granted, free of charge, to any person
++ *     obtaining a copy of this software and associated documentation
++ *     files (the "Software"), to deal in the Software without
++ *     restriction, including without limitation the rights to use,
++ *     copy, modify, merge, publish, distribute, sublicense, and/or
++ *     sell copies of the Software, and to permit persons to whom the
++ *     Software is furnished to do so, subject to the following
++ *     conditions:
++ *
++ *     The above copyright notice and this permission notice shall be
++ *     included in all copies or substantial portions of the Software.
++ *
++ *     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
++ *     EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
++ *     OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
++ *     NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
++ *     HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
++ *     WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
++ *     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
++ *     OTHER DEALINGS IN THE SOFTWARE.
++ */
++
++#include "sun8i-h3-core-board.dtsi"
++
++/ {
++	aliases {
++		serial0 = &uart0;
++		serial1 = &uart1;
++		serial2 = &uart2;
++		serial3 = &uart3;
++		ethernet0 = &emac;
++		i2c0 = &i2c0;
++		watchdog0 = &wdt0;
++	};
++
++	chosen {
++		stdout-path = "serial0:115200n8";
++	};
++
++	reg_usb_vbus: usb-vbus {
++		compatible = "regulator-fixed";
++		regulator-name = "usb-vbus";
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
++		enable-active-high;
++		gpio = <&pio 0 10 GPIO_ACTIVE_HIGH>; /* PA10 */
++	};
++};
++
++&i2c0 {
++	status = "okay";
++
++	eeprom@50 {
++		compatible = "atmel,24c02";
++		reg = <0x50>;
++		pagesize = <8>;
++//		read-only;
++	};
++
++	lm75b@48 {
++		compatible = "national,lm75b";
++		status = "okay";
++		reg = <0x48>;
++	};
++};
++
++&mmc0 {
++	vmmc-supply = <&reg_vcc3v3>;
++	bus-width = <4>;
++	cd-gpios = <&pio 5 6 GPIO_ACTIVE_LOW>;
++	status = "okay";
++};
++
++&emac {
++	status = "okay";
++	fixed-link {
++		speed = <100>;
++		full-duplex;
++	};
++};
++
++&spi1 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&spi1_pins>;
++	assigned-clocks = <&ccu CLK_SPI1>;
++	assigned-clock-rates = <600000000>;
++
++	switch@0 {
++		compatible = "microchip,ksz8795";
++		reg = <0>;
++
++		spi-max-frequency = <20000000>;
++		reset-gpios = <&pio 0 8 GPIO_ACTIVE_LOW>; /* PA8 */
++		status = "okay";
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			port@0 {
++				reg = <0>;
++				label = "cpu";
++				ethernet = <&emac>;
++				fixed-link {
++					speed = <100>;
++					full-duplex;
++				};
++			};
++			port@1 {
++				reg = <1>;
++				label = "lan2";
++			};
++			port@2 {
++				reg = <2>;
++				label = "lan3";
++			};
++			port@3 {
++				reg = <3>;
++				label = "lan4";
++			};
++			port@4 {
++				reg = <4>;
++				label = "lan5";
++			};
++		};
++	};
++};
++
++&ehci0 {
++       status = "okay";
++};
++
++&ohci0 {
++       status = "okay";
++};
++
++&ehci1 {
++       status = "okay";
++};
++
++&ohci1 {
++       status = "okay";
++};
++
++&ehci2 {
++	status = "okay";
++};
++
++&ohci2 {
++	status = "okay";
++};
++
++&usb_otg {
++       status = "okay";
++       dr_mode = "host";
++};
++
++&usbphy {
++	usb0_vbus-supply = <&reg_usb_vbus>;
++       usb1_vbus-supply = <&reg_usb_vbus>;
++       usb2_vbus-supply = <&reg_usb_vbus>;
++	status = "okay";
++};
++
++&uart0 {
++       status = "okay";
++};
++
++&uart1 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&uart1_pins>;
++	rts-gpios = <&r_pio 0 7 GPIO_ACTIVE_HIGH>; /* PL7 */
++	linux,rs485-enabled-at-boot-time;
++	rs485-rts-active-high;
++	rs485-rts-delay = <0 0>;
++	status = "okay";
++};
++
++&uart2 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&uart2_pins>;
++	rts-gpios = <&pio 0 3 GPIO_ACTIVE_HIGH>; /* PA3 */
++	linux,rs485-enabled-at-boot-time;
++	rs485-rts-active-high;
++	rs485-rts-delay = <0 0>;
++	status = "okay";
++};
++
++&rtc {
++	status = "disabled";
++};
++
++
+diff --git a/arch/arm/boot/dts/sun8i-h3-gridless-mini-vert.dtsi b/arch/arm/boot/dts/sun8i-h3-gridless-mini-vert.dtsi
+new file mode 100644
+index 0000000..b3b283a
+--- /dev/null
++++ b/arch/arm/boot/dts/sun8i-h3-gridless-mini-vert.dtsi
+@@ -0,0 +1,142 @@
++/*
++ * Copyright (C) 2020 Felix Huebner <huebner@unipoin.com>
++ *
++ * This file is dual-licensed: you can use it either under the terms
++ * of the GPL or the X11 license, at your option. Note that this dual
++ * licensing only applies to this file, and not this project as a
++ * whole.
++ *
++ *  a) This file is free software; you can redistribute it and/or
++ *     modify it under the terms of the GNU General Public License as
++ *     published by the Free Software Foundation; either version 2 of the
++ *     License, or (at your option) any later version.
++ *
++ *     This file is distributed in the hope that it will be useful,
++ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ *     GNU General Public License for more details.
++ *
++ * Or, alternatively,
++ *
++ *  b) Permission is hereby granted, free of charge, to any person
++ *     obtaining a copy of this software and associated documentation
++ *     files (the "Software"), to deal in the Software without
++ *     restriction, including without limitation the rights to use,
++ *     copy, modify, merge, publish, distribute, sublicense, and/or
++ *     sell copies of the Software, and to permit persons to whom the
++ *     Software is furnished to do so, subject to the following
++ *     conditions:
++ *
++ *     The above copyright notice and this permission notice shall be
++ *     included in all copies or substantial portions of the Software.
++ *
++ *     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
++ *     EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
++ *     OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
++ *     NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
++ *     HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
++ *     WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
++ *     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
++ *     OTHER DEALINGS IN THE SOFTWARE.
++ */
++
++#include <dt-bindings/input/input.h>
++#include <dt-bindings/gpio/gpio.h>
++
++/ {
++	aliases {
++		i2c0 = &i2c0;
++	};
++
++	leds {
++		compatible = "gpio-leds";
++
++		status1 {
++			label = "gl_mini_green_status1";
++			gpios = <&pio 0 17 GPIO_ACTIVE_HIGH>; /* PA17 */
++			default-state = "on";
++		};
++
++		status2 {
++			label = "gl_mini_green_status2";
++			gpios = <&pio 0 6 GPIO_ACTIVE_HIGH>; /* PA6 */
++			default-state = "off";
++		};
++
++		status3 {
++			label = "gl_mini_green_status3";
++			gpios = <&pio 0 21 GPIO_ACTIVE_HIGH>; /* PA21 */
++			default-state = "off";
++		};
++
++		status4 {
++			label = "gl_mini_green_status4";
++			gpios = <&pio 0 20 GPIO_ACTIVE_HIGH>; /* PA20 */
++			default-state = "off";
++		};
++
++		heartbeat {
++			label = "gl_mini_red_heartbeat";
++			gpios = <&pio 0 19 GPIO_ACTIVE_HIGH>; /* PA19 */
++			linux,default-trigger = "heartbeat";
++		};
++	};
++
++	button {
++		compatible = "gpio-keys";
++
++		button {
++			label = "CONFIG";
++			linux,code = <KEY_CONFIG>;
++			gpios = <&pio 0 18 GPIO_ACTIVE_LOW>; /* PA18 */
++		};
++	};
++};
++
++&i2c0 {
++	status = "okay";
++
++	rtc1: pcf8523@68 {
++		compatible = "nxp,pcf8523";
++		status = "okay";
++		reg = <0x68>;
++	};
++
++	lm75b@49 {
++		compatible = "national,lm75b";
++		status = "okay";
++		reg = <0x49>;
++	};
++};
++
++&ehci3 {
++	non-removable-ports = <1>;
++	status = "okay";
++
++	#address-cells = <1>;
++	#size-cells = <0>;
++
++	wireless-controller@1 {
++		compatible = "usbbda,b720";
++		reg = <1>;
++
++		#address-cells = <2>;
++		#size-cells = <0>;
++
++		bluetooth@0 {
++			compatible = "usbifbda,b720.config1.0";
++			reg = <0 1>;
++			status = "disabled";
++		};
++
++		bluetooth@1 {
++			compatible = "usbifbda,b720.config1.1";
++			reg = <1 1>;
++			status = "disabled";
++		};
++	};
++};
++&ohci3 {
++	status = "okay";
++};
++
++

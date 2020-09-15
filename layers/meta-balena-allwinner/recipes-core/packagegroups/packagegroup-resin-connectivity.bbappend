@@ -5,3 +5,5 @@ CONNECTIVITY_MODULES_append_orange-pi-zero = " xradio"
 CONNECTIVITY_FIRMWARES_append_orange-pi-zero = " xradio-firmware"
 
 CONNECTIVITY_FIRMWARES_append_nanopi-neo-air = " linux-firmware-bcm43430"
+
+CONNECTIVITY_MODULES_append_gridless-mini = " rtl8723bu rtl8723du"
